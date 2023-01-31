@@ -1,6 +1,7 @@
 
 const express = require('express');
 const cors = require('cors');
+const { dbConnection } = require('../database/config');
 
 
 class Server{
@@ -10,11 +11,17 @@ class Server{
         this.app = express();
         this.port = process.env.PORT;
         this.usersRoutesPath = '/api/users';
+        // Connect on DB
+        this.MongoConnection(); 
+
         // Middlewares
         this.middlewares();
 
         // Routes application
         this.routes();
+    }
+    async MongoConnection(){
+        await dbConnection();
     }
     middlewares(){
         // CORS
