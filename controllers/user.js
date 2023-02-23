@@ -65,11 +65,16 @@ const userPut = async(req, res = response) => {
 const userDelete = async(req, res = response) => {
 
     const { id } = req.params;
+
+    const uid = req.uid;
     // Delete complete ( bad practice )
     // const user = await Usuario.findByIdAndDelete( id );
     // Delete switching status property in DB ( good practice )
     const user = await Usuario.findByIdAndUpdate( id,  { status:false } );
-    res.json( user );
+
+    const userAuthenticated = req.user;
+
+    res.json( {user , userAuthenticated} );
 };
 
 const userPatch = (req, res = response) => {

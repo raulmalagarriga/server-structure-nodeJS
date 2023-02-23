@@ -11,6 +11,7 @@ class Server{
         this.app = express();
         this.port = process.env.PORT;
         this.usersRoutesPath = '/api/users';
+        this.authRoutesPath = '/api/auth';
         // Connect on DB
         this.MongoConnection(); 
 
@@ -32,6 +33,7 @@ class Server{
         this.app.use( express.static( 'public' ));
     }
     routes(){
+        this.app.use( this.authRoutesPath , require('../routes/auth'));
         this.app.use( this.usersRoutesPath , require('../routes/user'));
     }
     listen(){
