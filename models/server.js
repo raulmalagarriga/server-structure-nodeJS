@@ -10,8 +10,11 @@ class Server{
         // Server props
         this.app = express();
         this.port = process.env.PORT;
-        this.usersRoutesPath = '/api/users';
-        this.authRoutesPath = '/api/auth';
+        this.usersRoutesPath =      '/api/users';
+        this.authRoutesPath =       '/api/auth';
+        this.categoriesRoutesPath = '/api/categories';
+        this.productsRouterPath =   '/api/products';
+        this.searchRoutePath =      '/api/search';
         // Connect on DB
         this.MongoConnection(); 
 
@@ -33,8 +36,22 @@ class Server{
         this.app.use( express.static( 'public' ));
     }
     routes(){
-        this.app.use( this.authRoutesPath , require('../routes/auth'));
-        this.app.use( this.usersRoutesPath , require('../routes/user'));
+        this.app.use( this.authRoutesPath,       require('../routes/auth'));
+        this.app.use( this.usersRoutesPath,      require('../routes/user'));
+        this.app.use( this.categoriesRoutesPath, require('../routes/categories'));   
+        this.app.use( this.productsRouterPath,   require('../routes/products'));  
+        this.app.use( this.searchRoutePath,      require('../routes/search'));
+        /* 
+            Inventory options {
+                price manager (ajuste de precios)
+                charge inventory
+            }, 
+            sell module, 
+            buy module,
+            clients,
+            providers
+
+        */ 
     }
     listen(){
         this.app.listen(this.port , () => {
